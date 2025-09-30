@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -15,6 +17,11 @@ public class EnemyHealth : MonoBehaviour
     CapsuleCollider capsuleCollider;
     bool isDead;
     bool isSinking;
+    int id_dead = Animator.StringToHash("Dead");
+    EnemyManager pool;
+
+    NavMeshAgent agent;
+    Rigidbody rb;
 
 
     void Awake ()
@@ -23,6 +30,8 @@ public class EnemyHealth : MonoBehaviour
         enemyAudio = GetComponent <AudioSource> ();
         hitParticles = GetComponentInChildren <ParticleSystem> ();
         capsuleCollider = GetComponent <CapsuleCollider> ();
+        rb = GetComponent <Rigidbody> ();
+        agent = GetComponent <NavMeshAgent> ();
 
         currentHealth = startingHealth;
     }
@@ -62,19 +71,44 @@ public class EnemyHealth : MonoBehaviour
 
         capsuleCollider.isTrigger = true;
 
-        anim.SetTrigger ("Dead");
+        anim.SetTrigger (id_dead);
 
         enemyAudio.clip = deathClip;
         enemyAudio.Play ();
     }
 
+    private void OnEnable()
+    {
+        agent.enabled = true;
+        rb.isKinematic = false;
+        isSinking = false;
+    }
+    private void OnDisable()
+    {
+        if (pool != null)
+        {
+            pool.AddToQueue(this);
+        }
+    }
+
+    public void SetPool(EnemyManager bp)
+    {
+        pool = bp;
+    }
+
 
     public void StartSinking ()
     {
-        GetComponent <UnityEngine.AI.NavMeshAgent> ().enabled = false;
-        GetComponent <Rigidbody> ().isKinematic = true;
+        agent.enabled = false;
+        rb.isKinematic = true;
         isSinking = true;
         ScoreManager.score += scoreValue;
-        Destroy (gameObject, 2f);
+        StartCoroutine(DisableAfterDelay(2f));
+    }
+
+    private IEnumerator DisableAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        gameObject.SetActive(false);
     }
 }

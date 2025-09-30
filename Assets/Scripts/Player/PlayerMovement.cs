@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
 	private Rigidbody playerRigidbody;
 	private int floorMask;
 	private float camRayLength = 100f;
+
+	// hashing
+	int id_walk = Animator.StringToHash("IsWalking");
 
 	void Awake()
 	{
@@ -35,7 +39,16 @@ public class PlayerMovement : MonoBehaviour
 		playerRigidbody.MovePosition(transform.position + movement);
 	}
 
-	void Turning()
+    void OnMovement(InputValue v)
+    {
+        //Debug.Log("OnMovement Called!");
+        Vector2 inputVector = v.Get<Vector2>();
+        movement = new Vector3(inputVector.x, 0, inputVector.y);
+        anim.transform.forward = movement.normalized;
+
+    }
+
+    void Turning()
 	{
 		Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit floorHit;
@@ -53,6 +66,6 @@ public class PlayerMovement : MonoBehaviour
 	{
 		bool walking = h != 0f || v != 0f;
 
-		anim.SetBool("IsWalking", walking);
+		anim.SetBool(id_walk, walking);
 	}
 }

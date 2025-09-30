@@ -82,4 +82,57 @@ public class PlayerShooting : MonoBehaviour
             gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);
         }
     }
+
+    void OnShoot()
+    {
+        // code here for new input system basically the same code
+        // you need to figure out how to do the time between bullets inside here
+
+        timer = 0f;
+
+        gunAudio.Play();
+
+        gunLight.enabled = true;
+
+        gunParticles.Stop();
+        gunParticles.Play();
+
+        gunLine.enabled = true;
+        gunLine.SetPosition(0, transform.position);
+
+        shootRay.origin = transform.position;
+        shootRay.direction = transform.forward;
+
+        if (Physics.Raycast(shootRay, out shootHit, range, shootableMask))
+        {
+            EnemyHealth enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                if (AttemptFire() == true)
+                {
+                    enemyHealth.TakeDamage(damagePerShot, shootHit.point);
+                }
+
+            }
+            gunLine.SetPosition(1, shootHit.point);
+        }
+        else
+        {
+            gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
+        }
+    }
+
+    bool AttemptFire()
+    {
+        if (timer >= timeBetweenBullets)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
 }
