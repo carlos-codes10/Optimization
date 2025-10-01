@@ -21,7 +21,12 @@ public class EnemyMovement : MonoBehaviour
         // SCRIPTABLE OBJECT ENEMY & PLAYER HEALTH HERE
         if (enemyHealth.currentHealth > 0 && playerStats.currentHealth > 0) 
         {
-            agent.SetDestination(target.position);
+            if(agent.enabled == false)
+            {
+
+            }
+            if(agent.isOnNavMesh)
+                agent.SetDestination(target.position);
         }
         else
         {

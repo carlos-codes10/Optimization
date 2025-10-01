@@ -1906,7 +1906,7 @@ MonoBehaviour:
   spawnTime: 3
   spawnPoints:
   - {fileID: 1456155940}
-  enemyAmount: 20
+  enemyAmount: 1
   playerStats: {fileID: 11400000, guid: 7600105fda2cc45499346d2bfc641377, type: 2}
 --- !u!4 &2135234548
 Transform:
@@ -1939,7 +1939,7 @@ MonoBehaviour:
   spawnTime: 10
   spawnPoints:
   - {fileID: 694235421}
-  enemyAmount: 20
+  enemyAmount: 0
   playerStats: {fileID: 11400000, guid: 7600105fda2cc45499346d2bfc641377, type: 2}
 --- !u!114 &2135234550
 MonoBehaviour:
@@ -1957,7 +1957,7 @@ MonoBehaviour:
   spawnTime: 3
   spawnPoints:
   - {fileID: 1084502847}
-  enemyAmount: 20
+  enemyAmount: 0
   playerStats: {fileID: 11400000, guid: 7600105fda2cc45499346d2bfc641377, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

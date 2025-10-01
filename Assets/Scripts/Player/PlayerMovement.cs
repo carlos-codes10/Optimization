@@ -12,9 +12,10 @@ public class PlayerMovement : MonoBehaviour
 	private float camRayLength = 100f;
 	bool isWalking;
 	Vector3 lookInput;
+	Vector3 playerToMouse;
 
-	// hashing
-	int id_walk = Animator.StringToHash("IsWalking");
+    // hashing
+    int id_walk = Animator.StringToHash("IsWalking");
 
 	void Awake()
 	{
@@ -25,7 +26,6 @@ public class PlayerMovement : MonoBehaviour
 
 	void FixedUpdate()
 	{
-
 		Turning();
         //Animating(h, v);
         movement = movement.normalized * speed * Time.deltaTime;
@@ -60,7 +60,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Turning()
 	{
-		Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+		Vector3 mousePos = Mouse.current.position.ReadValue();
+
+		Debug.Log("Mouse current position = " + mousePos);
+
+		Ray camRay = Camera.main.ScreenPointToRay(mousePos);
 		RaycastHit floorHit;
 
 		if (Physics.Raycast(camRay, out floorHit, camRayLength, floorMask)) {
@@ -72,12 +76,15 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 
-	/*void OnLook(InputValue v)
+
+	void OnLook(InputValue v)
 	{
 
 		lookInput = v.Get<Vector2>();
 
-		Vector3 Look = new Vector3(lookInput.x, 0, lookInput.y);
+		Vector3 Look = lookInput;
+
+		Debug.Log("Mouse Look: " + Look);
 
 		Debug.Log("Onlook Called");
         Ray camRay = Camera.main.ScreenPointToRay(Look);
@@ -85,13 +92,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics.Raycast(camRay, out floorHit, camRayLength, floorMask))
         {
+			Debug.Log("ray cast success");
             Vector3 playerToMouse = floorHit.point - transform.position;
             playerToMouse.y = 0f;
 
             Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
             playerRigidbody.MoveRotation(newRotation);
         }
-    }*/
+    }
 
 	/*void Animating(float h, float v)
 	{

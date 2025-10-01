@@ -13,7 +13,7 @@ public class EnemyHealth : MonoBehaviour
     AudioSource enemyAudio;
     ParticleSystem hitParticles;
     CapsuleCollider capsuleCollider;
-    bool isDead;
+    public bool isDead;
     bool isSinking;
     int id_dead = Animator.StringToHash("Dead");
     EnemyManager pool;
@@ -85,15 +85,19 @@ public class EnemyHealth : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine(EnableDelay(0.5f));
+        StartCoroutine(EnableDelay(0.2f));
+        currentHealth = enemyStats.maxHealth;
         rb.isKinematic = false;
         isSinking = false;
+        isDead = false;
+        capsuleCollider.isTrigger = false;
 
     }
     private void OnDisable()
     {
         if (pool != null)
         {
+            
             pool.AddToQueue(this);
         }
     }
