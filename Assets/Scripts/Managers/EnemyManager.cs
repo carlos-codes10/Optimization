@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    public PlayerHealth playerHealth;
     //public GameObject enemy;
     [SerializeField] EnemyHealth enemy;
     public float spawnTime = 3f;
@@ -12,6 +11,9 @@ public class EnemyManager : MonoBehaviour
     // start enemy pool
     [SerializeField] int enemyAmount;
     Queue<EnemyHealth> remainingEnemies = new Queue<EnemyHealth>();
+
+    // Scritable Object
+    [SerializeField] PlayerSO playerStats;
 
 
     void Start ()
@@ -27,15 +29,10 @@ public class EnemyManager : MonoBehaviour
         InvokeRepeating ("Spawn", spawnTime, spawnTime);
     }
 
-    void Update()
-    {
-
-    }
-
 
     void Spawn ()
     {
-        if(playerHealth.currentHealth <= 0f)
+        if(playerStats.currentHealth <= 0f)
         {
             return;
         }

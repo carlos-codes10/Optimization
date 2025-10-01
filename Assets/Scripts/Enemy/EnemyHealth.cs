@@ -1,13 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int startingHealth = 100;
     public int currentHealth;
-    public float sinkSpeed = 2.5f;
-    public int scoreValue = 10;
     public AudioClip deathClip;
 
 
@@ -23,6 +21,12 @@ public class EnemyHealth : MonoBehaviour
     NavMeshAgent agent;
     Rigidbody rb;
 
+    // Scritable Object
+    [SerializeField] PlayerSO playerStats;
+    [SerializeField] EnemySO enemyStats;
+
+    [SerializeField] UnityEvent<int> scoreAdder;
+
 
     void Awake ()
     {
@@ -33,15 +37,17 @@ public class EnemyHealth : MonoBehaviour
         rb = GetComponent <Rigidbody> ();
         agent = GetComponent <NavMeshAgent> ();
 
-        currentHealth = startingHealth;
     }
-
+    private void Start()
+    {
+        currentHealth = enemyStats.maxHealth;
+    }
 
     void Update ()
     {
         if(isSinking)
         {
-            transform.Translate (-Vector3.up * sinkSpeed * Time.deltaTime);
+            transform.Translate (-Vector3.up * enemyStats.sinkSpeed * Time.deltaTime);
         }
     }
 
@@ -79,9 +85,10 @@ public class EnemyHealth : MonoBehaviour
 
     private void OnEnable()
     {
-        agent.enabled = true;
+        StartCoroutine(EnableDelay(0.5f));
         rb.isKinematic = false;
         isSinking = false;
+
     }
     private void OnDisable()
     {
@@ -102,7 +109,8 @@ public class EnemyHealth : MonoBehaviour
         agent.enabled = false;
         rb.isKinematic = true;
         isSinking = true;
-        ScoreManager.score += scoreValue;
+        scoreAdder?.Invoke(enemyStats.scoreValue);
+        ScoreManager.score += enemyStats.scoreValue;
         StartCoroutine(DisableAfterDelay(2f));
     }
 
@@ -110,5 +118,11 @@ public class EnemyHealth : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         gameObject.SetActive(false);
+    }
+
+    private IEnumerator EnableDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        agent.enabled = true;
     }
 }

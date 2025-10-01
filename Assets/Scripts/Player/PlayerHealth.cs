@@ -2,12 +2,12 @@
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System.Runtime.CompilerServices;
+using UnityEngine.Events;
 
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int startingHealth = 100;
-    public int currentHealth;
     public Slider healthSlider;
     public Image damageImage;
     public AudioClip deathClip;
@@ -21,7 +21,10 @@ public class PlayerHealth : MonoBehaviour
     PlayerShooting playerShooting;
     bool isDead;
     bool damaged;
+    int id_die = Animator.StringToHash("Die");
 
+    // Scritable Object
+    [SerializeField] PlayerSO playerStats;
 
     void Awake ()
     {
@@ -29,7 +32,7 @@ public class PlayerHealth : MonoBehaviour
         playerAudio = GetComponent <AudioSource> ();
         playerMovement = GetComponent <PlayerMovement> ();
         playerShooting = GetComponentInChildren <PlayerShooting> ();
-        currentHealth = startingHealth;
+        playerStats.RestoreHealth();
     }
 
 
@@ -41,7 +44,7 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
-            damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+            damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
         }
         damaged = false;
     }
@@ -51,13 +54,13 @@ public class PlayerHealth : MonoBehaviour
     {
         damaged = true;
 
-        currentHealth -= amount;
+        playerStats.DecreaseHealth(amount); // I guess its a helper function now
 
-        healthSlider.value = currentHealth;
+        healthSlider.value = playerStats.currentHealth;
 
         playerAudio.Play ();
 
-        if(currentHealth <= 0 && !isDead)
+        if (playerStats.currentHealth <= 0 && !isDead)
         {
             Death ();
         }
@@ -70,7 +73,7 @@ public class PlayerHealth : MonoBehaviour
 
         playerShooting.DisableEffects ();
 
-        anim.SetTrigger ("Die");
+        anim.SetTrigger (id_die);
 
         playerAudio.clip = deathClip;
         playerAudio.Play ();

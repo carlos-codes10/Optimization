@@ -10,14 +10,21 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] Text text;
 
 
-    void Awake ()
+    private void Start()
     {
         score = 0;
+        text.text = "Score: " + score;
+    }
+
+    private void Update()
+    {
+        text.text = "Score: " + score;
     }
 
 
-    void Update ()
+    public void UpdateScore(int points)
     {
+        score += points;
         text.text = "Score: " + score;
     }
 }

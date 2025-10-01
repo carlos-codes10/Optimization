@@ -10178,7 +10178,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94f6618a0da65fa45b24d5105d5d8422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 4735207576911020, guid: 9e3e72cd89ef44f97afe08f9baaabc18, type: 3}
+  target: {fileID: 4735207576911020, guid: 9e3e72cd89ef44f97afe08f9baaabc18, type: 3}
+  playerStats: {fileID: 11400000, guid: 7600105fda2cc45499346d2bfc641377, type: 2}
   agent: {fileID: 195917830745120710}
 --- !u!114 &114153904350160260
 MonoBehaviour:
@@ -10192,11 +10193,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b9d14572410594cb85d40eedfb150c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 300
   currentHealth: 0
-  sinkSpeed: 2.5
-  scoreValue: 50
   deathClip: {fileID: 8300000, guid: 8c615fd0429f34edf85539d70279360d, type: 3}
+  playerStats: {fileID: 11400000, guid: 7600105fda2cc45499346d2bfc641377, type: 2}
+  enemyStats: {fileID: 11400000, guid: a0404eae3d68f5545aaaa5de80a06534, type: 2}
+  scoreAdder:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &114290231285748624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10209,8 +10212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e15099f5ee559584089d5851df572def, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenAttacks: 0.5
-  attackDamage: 30
+  playerStats: {fileID: 11400000, guid: 7600105fda2cc45499346d2bfc641377, type: 2}
+  enemyStats: {fileID: 11400000, guid: a0404eae3d68f5545aaaa5de80a06534, type: 2}
 --- !u!1 &1915870434614438
 GameObject:
   m_ObjectHideFlags: 0

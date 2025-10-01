@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class PlayerShooting : MonoBehaviour
     AudioSource gunAudio;
     Light gunLight;
     float effectsDisplayTime = 0.2f;
+    bool isShooting;
 
 
     void Awake ()
@@ -25,6 +28,7 @@ public class PlayerShooting : MonoBehaviour
         gunLine = GetComponent <LineRenderer> ();
         gunAudio = GetComponent<AudioSource> ();
         gunLight = GetComponent<Light> ();
+        
     }
 
 
@@ -32,15 +36,16 @@ public class PlayerShooting : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-		if(Input.GetButton ("Fire1") && timer >= timeBetweenBullets && Time.timeScale != 0)
+        if (isShooting)
         {
-            Shoot ();
+            AttemptFire();
         }
 
-        if(timer >= timeBetweenBullets * effectsDisplayTime)
+        if (timer >= timeBetweenBullets * effectsDisplayTime)
         {
             DisableEffects ();
         }
+
     }
 
 
@@ -73,7 +78,7 @@ public class PlayerShooting : MonoBehaviour
             EnemyHealth enemyHealth = shootHit.collider.GetComponent <EnemyHealth> ();
             if(enemyHealth != null)
             {
-                enemyHealth.TakeDamage (damagePerShot, shootHit.point);
+                enemyHealth.TakeDamage(damagePerShot, shootHit.point);
             }
             gunLine.SetPosition (1, shootHit.point);
         }
@@ -83,54 +88,30 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
-    void OnShoot()
+    void OnShoot(InputValue v)
     {
         // code here for new input system basically the same code
         // you need to figure out how to do the time between bullets inside here
+        Debug.Log("ONSHOOT IS CALLED");
 
-        timer = 0f;
-
-        gunAudio.Play();
-
-        gunLight.enabled = true;
-
-        gunParticles.Stop();
-        gunParticles.Play();
-
-        gunLine.enabled = true;
-        gunLine.SetPosition(0, transform.position);
-
-        shootRay.origin = transform.position;
-        shootRay.direction = transform.forward;
-
-        if (Physics.Raycast(shootRay, out shootHit, range, shootableMask))
+        if (v.isPressed)
         {
-            EnemyHealth enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
-            if (enemyHealth != null)
-            {
-                if (AttemptFire() == true)
-                {
-                    enemyHealth.TakeDamage(damagePerShot, shootHit.point);
-                }
-
-            }
-            gunLine.SetPosition(1, shootHit.point);
+            isShooting = true;
         }
         else
         {
-            gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
+            isShooting = false;
         }
+        
+         
     }
 
-    bool AttemptFire()
+    void AttemptFire()
     {
-        if (timer >= timeBetweenBullets)
+        if (timer >= timeBetweenBullets && Time.timeScale != 0)
         {
-            return true;
-        }
-        else
-        {
-            return false;
+            Shoot();
+            timer = 0;
         }
 
     }
