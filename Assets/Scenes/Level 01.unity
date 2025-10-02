@@ -864,6 +864,12 @@ PrefabInstance:
       propertyPath: text
       value: 
       objectReference: {fileID: 2045715842}
+    - target: {fileID: 6737163134672753776, guid: 83d12e59d9e5e024c9f5c0cba673d8a8,
+        type: 3}
+      propertyPath: myScore
+      value: 
+      objectReference: {fileID: 11400000, guid: b6cce3ff9c7588145bae744bebd19ac9,
+        type: 2}
     - target: {fileID: 6925894322631453537, guid: 83d12e59d9e5e024c9f5c0cba673d8a8,
         type: 3}
       propertyPath: m_Name
@@ -1939,7 +1945,7 @@ MonoBehaviour:
   spawnTime: 10
   spawnPoints:
   - {fileID: 694235421}
-  enemyAmount: 0
+  enemyAmount: 1
   playerStats: {fileID: 11400000, guid: 7600105fda2cc45499346d2bfc641377, type: 2}
 --- !u!114 &2135234550
 MonoBehaviour:
@@ -1957,7 +1963,7 @@ MonoBehaviour:
   spawnTime: 3
   spawnPoints:
   - {fileID: 1084502847}
-  enemyAmount: 0
+  enemyAmount: 1
   playerStats: {fileID: 11400000, guid: 7600105fda2cc45499346d2bfc641377, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

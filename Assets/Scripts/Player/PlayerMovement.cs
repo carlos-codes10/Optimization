@@ -60,9 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Turning()
 	{
-		Vector3 mousePos = Mouse.current.position.ReadValue();
-
-		Debug.Log("Mouse current position = " + mousePos);
+		Vector3 mousePos = Mouse.current.position.ReadValue(); // new input system
 
 		Ray camRay = Camera.main.ScreenPointToRay(mousePos);
 		RaycastHit floorHit;
@@ -77,14 +75,12 @@ public class PlayerMovement : MonoBehaviour
 	}
 
 
-	void OnLook(InputValue v)
+	/*void OnLook(InputValue v)
 	{
 
 		lookInput = v.Get<Vector2>();
 
 		Vector3 Look = lookInput;
-
-		Debug.Log("Mouse Look: " + Look);
 
 		Debug.Log("Onlook Called");
         Ray camRay = Camera.main.ScreenPointToRay(Look);
@@ -99,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
             Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
             playerRigidbody.MoveRotation(newRotation);
         }
-    }
+    }*/
 
 	/*void Animating(float h, float v)
 	{

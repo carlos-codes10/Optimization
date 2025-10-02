@@ -201,24 +201,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   deathClip: {fileID: 8300000, guid: 62366b8d2c37a49dca550841c741317f, type: 3}
+  isDead: 0
   playerStats: {fileID: 11400000, guid: 7600105fda2cc45499346d2bfc641377, type: 2}
   enemyStats: {fileID: 11400000, guid: 4de36e73863e0c84b98c72060f9b6f77, type: 2}
-  scoreAdder:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4177181373643364005, guid: 83d12e59d9e5e024c9f5c0cba673d8a8,
-          type: 3}
-        m_TargetAssemblyTypeName: ScoreManager, Assembly-CSharp
-        m_MethodName: UpdateScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  myScore: {fileID: 11400000, guid: b6cce3ff9c7588145bae744bebd19ac9, type: 2}
 --- !u!82 &82684988033110934
 AudioSource:
   m_ObjectHideFlags: 0

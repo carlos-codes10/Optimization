@@ -5290,8 +5290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   deathClip: {fileID: 8300000, guid: 1d3bfb9269f136947bf8ac164cace1ff, type: 3}
+  isDead: 0
   playerStats: {fileID: 11400000, guid: 7600105fda2cc45499346d2bfc641377, type: 2}
   enemyStats: {fileID: 11400000, guid: 8693018d7e9fa6b42a6daaf9c54ad716, type: 2}
-  scoreAdder:
-    m_PersistentCalls:
-      m_Calls: []
+  myScore: {fileID: 11400000, guid: b6cce3ff9c7588145bae744bebd19ac9, type: 2}

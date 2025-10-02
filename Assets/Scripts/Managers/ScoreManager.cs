@@ -4,7 +4,7 @@ using System.Collections;
 
 public class ScoreManager : MonoBehaviour
 {
-    public static int score;
+    [SerializeField] ScoreSO myScore;
 
 
     [SerializeField] Text text;
@@ -12,19 +12,12 @@ public class ScoreManager : MonoBehaviour
 
     private void Start()
     {
-        score = 0;
-        text.text = "Score: " + score;
+        myScore.score = 0;  
+        text.text = "Score: " + myScore.score;
     }
 
     private void Update()
     {
-        text.text = "Score: " + score;
-    }
-
-
-    public void UpdateScore(int points)
-    {
-        score += points;
-        text.text = "Score: " + score;
+        text.text = "Score: " + myScore.score;
     }
 }

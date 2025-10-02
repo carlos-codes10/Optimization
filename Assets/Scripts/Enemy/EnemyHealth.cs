@@ -24,9 +24,7 @@ public class EnemyHealth : MonoBehaviour
     // Scritable Object
     [SerializeField] PlayerSO playerStats;
     [SerializeField] EnemySO enemyStats;
-
-    [SerializeField] UnityEvent<int> scoreAdder;
-
+    [SerializeField] ScoreSO myScore;
 
     void Awake ()
     {
@@ -113,8 +111,7 @@ public class EnemyHealth : MonoBehaviour
         agent.enabled = false;
         rb.isKinematic = true;
         isSinking = true;
-        scoreAdder?.Invoke(enemyStats.scoreValue);
-        ScoreManager.score += enemyStats.scoreValue;
+        myScore.score += enemyStats.scoreValue;
         StartCoroutine(DisableAfterDelay(2f));
     }
 

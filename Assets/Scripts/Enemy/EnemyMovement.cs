@@ -21,15 +21,12 @@ public class EnemyMovement : MonoBehaviour
         // SCRIPTABLE OBJECT ENEMY & PLAYER HEALTH HERE
         if (enemyHealth.currentHealth > 0 && playerStats.currentHealth > 0) 
         {
-            if(agent.enabled == false)
-            {
-
-            }
             if(agent.isOnNavMesh)
                 agent.SetDestination(target.position);
         }
         else
         {
+            Debug.LogError("SOMETHING HAPPENED TO THE NAVMESH!");
             agent.enabled = false;
         }
     }
